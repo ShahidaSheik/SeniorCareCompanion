@@ -23,4 +23,10 @@ class User(Base, TimestampMixin):
     role: Mapped[UserRole] = mapped_column(SqlEnum(UserRole), index=True, nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
+    # Stored at user level also, so frontend can immediately personalize the UI
+    # after login without making another profile call.
+    preferred_language: Mapped[str | None] = mapped_column(String(30), default="English")
+    religion_preference: Mapped[str | None] = mapped_column(String(50), default="General")
+    care_setting: Mapped[str | None] = mapped_column(String(50), default="home")
+
     senior_profile: Mapped["SeniorProfile"] = relationship(back_populates="user", uselist=False)

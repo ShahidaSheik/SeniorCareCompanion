@@ -10,7 +10,9 @@ class PrayerContent(Base, TimestampMixin):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(150), nullable=False)
-    religion: Mapped[str] = mapped_column(String(50), index=True, nullable=False)  # Hindu, Muslim, Christian, General
+    religion: Mapped[str] = mapped_column(String(50), index=True, nullable=False)
+    language: Mapped[str] = mapped_column(String(30), default="English", index=True, nullable=False)
     content_text: Mapped[str] = mapped_column(Text, nullable=False)
-    audio_url: Mapped[str | None] = mapped_column(String(500))
+    audio_url: Mapped[str | None] = mapped_column(String(1000))
+    source_url: Mapped[str | None] = mapped_column(String(1000))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)

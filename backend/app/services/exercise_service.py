@@ -11,8 +11,8 @@ class ExerciseService:
     def create_activity(self, data: ExerciseCreate) -> ExerciseActivity:
         return self.repo.add(ExerciseActivity(**data.model_dump()))
 
-    def list_active(self) -> list[ExerciseActivity]:
-        return self.repo.list_active()
+    def list_active(self, language: str | None = None) -> list[ExerciseActivity]:
+        return self.repo.list_active(language)
 
     def complete(self, senior_id: int, data: CompletionCreate) -> ExerciseCompletion:
         return self.repo.mark_completed(senior_id, data.activity_id, data.completed_on)

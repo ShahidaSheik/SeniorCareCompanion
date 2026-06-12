@@ -9,7 +9,10 @@ class ExerciseCreate(BaseModel):
     category: str
     difficulty: str = "beginner"
     duration_minutes: int = Field(default=10, ge=1, le=120)
+    language: str = "English"
+    audio_url: str | None = None
     video_url: str | None = None
+    source_url: str | None = None
 
 
 class ExerciseOut(ExerciseCreate, ORMModel):

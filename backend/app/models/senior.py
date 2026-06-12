@@ -19,5 +19,6 @@ class SeniorProfile(Base, TimestampMixin):
     address: Mapped[str | None] = mapped_column(Text)
     preferred_language: Mapped[str] = mapped_column(String(30), default="English", nullable=False)
     religion_preference: Mapped[str | None] = mapped_column(String(50))
+    care_setting: Mapped[str] = mapped_column(String(50), default="home", nullable=False)
 
     user: Mapped["User"] = relationship(back_populates="senior_profile")

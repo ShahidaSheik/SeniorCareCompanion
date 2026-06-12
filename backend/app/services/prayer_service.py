@@ -11,5 +11,5 @@ class PrayerService:
     def create(self, data: PrayerCreate) -> PrayerContent:
         return self.repo.add(PrayerContent(**data.model_dump()))
 
-    def list_by_religion(self, religion: str) -> list[PrayerContent]:
-        return self.repo.list_by_religion(religion)
+    def list_by_religion(self, religion: str, language: str | None = None) -> list[PrayerContent]:
+        return self.repo.list_by_religion(religion, language)

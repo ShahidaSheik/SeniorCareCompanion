@@ -6,7 +6,7 @@ from app.core.database import Base
 from app.models.base_mixins import TimestampMixin
 
 
-class DailyCheckIn(Base, TimestampMixin):
+class CheckIn(Base, TimestampMixin):
     __tablename__ = "daily_checkins"
     __table_args__ = (UniqueConstraint("senior_id", "checkin_date", name="uq_senior_daily_checkin"),)
 

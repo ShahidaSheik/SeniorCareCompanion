@@ -15,7 +15,10 @@ class ExerciseActivity(Base, TimestampMixin):
     category: Mapped[str] = mapped_column(String(50), index=True, nullable=False)  # chair_yoga, breathing, walk
     difficulty: Mapped[str] = mapped_column(String(30), default="beginner", nullable=False)
     duration_minutes: Mapped[int] = mapped_column(Integer, default=10, nullable=False)
-    video_url: Mapped[str | None] = mapped_column(String(500))
+    language: Mapped[str] = mapped_column(String(30), default="English", index=True, nullable=False)
+    audio_url: Mapped[str | None] = mapped_column(String(1000))
+    video_url: Mapped[str | None] = mapped_column(String(1000))
+    source_url: Mapped[str | None] = mapped_column(String(1000))
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
 
 
