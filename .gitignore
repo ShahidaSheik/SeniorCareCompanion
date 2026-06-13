@@ -6,7 +6,6 @@ env/
 # Environment Variables
 .env
 *.env
-env.*
 frontend/.env
 backend/.env
 
