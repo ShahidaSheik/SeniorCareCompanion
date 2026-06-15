@@ -15,6 +15,9 @@ class ExerciseRepository(BaseRepository[ExerciseActivity]):
             stmt = stmt.where(or_(ExerciseActivity.language == language, ExerciseActivity.language == "English"))
         return list(self.db.scalars(stmt).all())
 
+    def list_all_admin(self) -> list[ExerciseActivity]:
+        return list(self.db.scalars(select(ExerciseActivity).order_by(ExerciseActivity.created_at.desc())).all())
+
     def mark_completed(self, senior_id: int, activity_id: int, completed_on: date) -> ExerciseCompletion:
         completion = ExerciseCompletion(senior_id=senior_id, activity_id=activity_id, completed_on=completed_on)
         self.db.add(completion)

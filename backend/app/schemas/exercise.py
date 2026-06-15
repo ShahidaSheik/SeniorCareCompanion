@@ -14,6 +14,17 @@ class ExerciseCreate(BaseModel):
     video_url: str | None = None
     source_url: str | None = None
 
+class ExerciseUpdate(BaseModel):
+    title: str | None = None
+    description: str | None = None
+    category: str | None = None
+    difficulty: str | None = None
+    duration_minutes: int | None = Field(default=None, ge=1, le=120)
+    language: str | None = None
+    audio_url: str | None = None
+    video_url: str | None = None
+    source_url: str | None = None
+    is_active: bool | None = None
 
 class ExerciseOut(ExerciseCreate, ORMModel):
     id: int

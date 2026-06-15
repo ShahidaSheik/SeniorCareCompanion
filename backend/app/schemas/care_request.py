@@ -8,7 +8,9 @@ class CareRequestCreate(BaseModel):
     description: str
     preferred_time: datetime | None = None
 
-
+class CareRequestStatusUpdate(BaseModel):
+    status: str
+    
 class CareRequestOut(CareRequestCreate, ORMModel):
     id: int
     senior_id: int

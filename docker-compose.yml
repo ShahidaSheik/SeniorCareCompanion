@@ -21,6 +21,8 @@ services:
       - ./backend/.env
     ports:
       - "8000:8000"
+    volumes:
+      - ./backend:/app
     depends_on:
       - mysql
 

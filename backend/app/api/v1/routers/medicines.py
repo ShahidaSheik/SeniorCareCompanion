@@ -1,25 +1,60 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.core.database import get_db
-from app.models.user import User
-from app.schemas.medicine import MedicineCreate, MedicineLogCreate, MedicineOut
-from app.services.medicine_service import MedicineService
-from app.services.user_context import get_current_user
 
-router = APIRouter()
+from app.core.database import get_db
+from app.services.user_context import get_current_user
+from app.models.user import User
+from app.schemas.medicine import (
+    MedicineCreate,
+    MedicineUpdate,
+    MedicineOut,
+    MedicineLogCreate,
+    MedicineLogOut,
+)
+from app.services.medicine_service import MedicineService
+
+router = APIRouter(tags=["Medicines"])
 
 
 @router.post("", response_model=MedicineOut)
-def create_reminder(data: MedicineCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    return MedicineService(db).create_reminder(current_user.id, data)
+def create_medicine(
+    data: MedicineCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return MedicineService(db).create_medicine(data, current_user)
 
 
-@router.get("", response_model=list[MedicineOut])
-def list_reminders(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    return MedicineService(db).list_my_reminders(current_user.id)
+@router.get("/my", response_model=list[MedicineOut])
+def list_my_medicines(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return MedicineService(db).list_my_medicines(current_user)
 
 
-@router.post("/taken")
-def mark_taken(data: MedicineLogCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    log = MedicineService(db).mark_taken(current_user.id, data)
-    return {"message": "Medicine marked as taken", "log_id": log.id}
+@router.put("/{medicine_id}", response_model=MedicineOut)
+def update_medicine(
+    medicine_id: int,
+    data: MedicineUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return MedicineService(db).update_medicine(medicine_id, data, current_user)
+
+
+@router.post("/{medicine_id}/mark-taken", response_model=MedicineLogOut)
+def mark_taken(
+    medicine_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return MedicineService(db).mark_taken(medicine_id, current_user)
+
+
+@router.get("/history", response_model=list[MedicineLogOut])
+def my_medicine_history(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    return MedicineService(db).my_history(current_user)

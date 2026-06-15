@@ -17,3 +17,7 @@ class PrayerRepository(BaseRepository[PrayerContent]):
         if language:
             stmt = stmt.where(or_(PrayerContent.language == language, PrayerContent.language == "English"))
         return list(self.db.scalars(stmt).all())
+    
+    def list_all_admin(self) -> list[PrayerContent]:
+        stmt = select(PrayerContent).order_by(PrayerContent.created_at.desc())
+        return list(self.db.scalars(stmt).all())
